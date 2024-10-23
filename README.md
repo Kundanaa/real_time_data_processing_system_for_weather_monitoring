@@ -31,19 +31,21 @@ This automatically starts the application with the message:
    Change the following:
 
 1.   In src/schedule_job/scheduler.py: ( For daily rollup summary) Line 41-42
+   Change from this:
 
      ```python
      schedule.every(INTERVAL).seconds.do(rollup_daily_summary)
 
-  1. to :
+   1. to this:
        ```python
         schedule.every().day.at("23:59").do(rollup_daily_summary)
 
 2.   In src/schedule_job/scheduler.py: ( For weekly visualization) Line 55-56
+   Change from this:
    
        ```python
         schedule.every(INTERVAL).seconds.do(visualize_summaries)
-  1. to:
+   1. to this:
         ```python
          #schedule.every().monday.at("10:00").do(visualize_summaries)
 
