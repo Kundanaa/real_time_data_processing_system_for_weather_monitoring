@@ -14,6 +14,8 @@ parameters, and for this assignment, we will focus on:
 
 # To Run the Application:
 
+Delete the weather_data.db and daily_weather_summary.png while running on your system. As they will be automatically created after you run the application.
+
 1. Install the necessary libraries:
      ```bash
      pip install -r requirements.txt
