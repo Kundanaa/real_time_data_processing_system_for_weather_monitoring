@@ -11,6 +11,66 @@ parameters, and for this assignment, we will focus on:
 3. feels_like: Perceived temperature in Centigrade
 4. dt: Time of the data update (Unix timestamp)
 
+
+# To Run the Application:
+
+1. Install the necessary libraries:
+     ```bash
+     pip install -r requirements.txt
+
+2. To Run the Application:
+      ```bash
+      python src/main.py
+
+This automatically starts the application with the message:
+   Starting weather monitoring every 1 minutes...
+
+   To get a faster response, intervals were considered in seconds.
+   For the real work:
+
+   Change the following:
+
+1.   In src/schedule_job/scheduler.py: ( For daily rollup summary) Line 41-42
+
+     ```python
+     schedule.every(INTERVAL).seconds.do(rollup_daily_summary)
+
+  1. to :
+       ```python
+        schedule.every().day.at("23:59").do(rollup_daily_summary)
+
+2.   In src/schedule_job/scheduler.py: ( For weekly visualization) Line 55-56
+   
+       ```python
+        schedule.every(INTERVAL).seconds.do(visualize_summaries)
+  1. to:
+        ```python
+         #schedule.every().monday.at("10:00").do(visualize_summaries)
+
+
+Also make similar necessary changes in intervals in src/main.py 
+
+3. You can also change the Interval time by your choice from src/api/config/settings.py:
+
+      ```python
+      # config/settings.py
+       API_KEY = 'USE_YOUR_API_KEY'
+       CITIES = ["Delhi", "Mumbai", "Chennai", "Bangalore", "Kolkata", "Hyderabad"]
+       INTERVAL = 60  # Time interval for API calls (in seconds)
+       ALERT_CHECK_INTERVAL = 5  # Check for alerts every 5 minutes
+       DAILY_ROLLUP_INTERVAL = 5 # Rollup every 24 hours
+       ALERT_THRESHOLD = {
+          'temperature': 35,  # Example threshold for temperature
+          'humidity': 70,     # Example threshold for humidity
+          'wind_speed': 10    # Example threshold for wind speed
+       }
+
+4. To Generate an API Key:
+   
+     Signup/Login to OpenWeatherMap API ( https://openweathermap.org/ ).
+     After creating the account, in the Accounts section, you can find your default API key. You can use that or you also create a different API key and use it.
+    
+
 ## Processing and Analysis:
 
 1. The system should continuously call the OpenWeatherMap API at a configurable interval
